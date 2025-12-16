@@ -1,287 +1,183 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>P&I S.A. | Consultores Asociados</title>
+<meta charset="UTF-8">
+<title>Sorteo FRIMSA S.A.</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body {
+    font-family: 'Arial Black', Arial, sans-serif;
+    background: radial-gradient(circle, #111, #000);
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
 
-  <style>
-    :root {
-      --primary: #0b1320;
-      --secondary: #111827;
-      --accent: #2563eb;
-      --bg: #f8fafc;
-      --text: #334155;
-      --white: #ffffff;
-      --success: #16a34a;
-    }
+h1 {
+    font-size: 48px;
+    margin-bottom: 5px;
+    color: #ffd700;
+    text-shadow: 0 0 15px #ffcc00;
+}
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+h2 {
+    margin-top: 0;
+    font-weight: normal;
+    letter-spacing: 2px;
+}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      scroll-behavior: smooth;
-    }
+textarea {
+    width: 90%;
+    max-width: 700px;
+    height: 180px;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+}
 
-    a { text-decoration: none; color: inherit; }
+input {
+    font-size: 18px;
+    padding: 8px;
+    width: 80px;
+    text-align: center;
+    border-radius: 8px;
+    border: none;
+}
 
-    /* HEADER */
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid #e5e7eb;
-      z-index: 1000;
-    }
+button {
+    font-size: 20px;
+    padding: 15px 30px;
+    margin: 10px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
 
-    .nav {
-      max-width: 1200px;
-      margin: auto;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+#btnSortear {
+    background: #28a745;
+    color: white;
+}
 
-    .logo { font-weight: 700; font-size: 1.4rem; color: var(--primary); }
+#btnResorteo {
+    background: #dc3545;
+    color: white;
+}
 
-    .nav-links a {
-      margin-left: 2rem;
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: #475569;
-    }
+button:hover {
+    transform: scale(1.05);
+}
 
-    /* MOBILE MENU BUTTON */
-    .menu-btn {
-      display: none;
-      font-size: 1.8rem;
-      cursor: pointer;
-    }
+#panelGanador {
+    margin-top: 30px;
+    font-size: 32px;
+    min-height: 60px;
+    animation: glow 1s infinite alternate;
+}
 
-    /* MOBILE MENU OVERLAY */
-    .mobile-menu {
-      position: fixed;
-      inset: 0;
-      background: rgba(11,19,32,0.98);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transform: translateX(100%);
-      transition: transform 0.4s ease;
-      z-index: 999;
-    }
+@keyframes glow {
+    from { text-shadow: 0 0 5px #fff; }
+    to { text-shadow: 0 0 20px #ffd700; }
+}
 
-    .mobile-menu.active { transform: translateX(0); }
+.listaGanadores {
+    margin-top: 20px;
+    font-size: 20px;
+}
 
-    .mobile-menu a {
-      color: var(--white);
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin: 1rem 0;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 1.5rem;
-      right: 2rem;
-      font-size: 2rem;
-      color: var(--white);
-      cursor: pointer;
-    }
-
-    /* HERO */
-    .hero {
-      height: 100vh;
-      background: linear-gradient(rgba(11,19,32,0.85), rgba(11,19,32,0.85)),
-        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80');
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 0 1.5rem;
-      color: var(--white);
-    }
-
-    .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
-    .hero p { font-size: 1.1rem; margin-bottom: 2.5rem; }
-
-    .btn-primary {
-      background: var(--accent);
-      color: var(--white);
-      padding: 0.9rem 2.2rem;
-      border-radius: 8px;
-      font-weight: 600;
-    }
-
-    /* SECTIONS */
-    section { padding: 6rem 2rem; }
-    .container { max-width: 1200px; margin: auto; }
-    h2 { text-align: center; font-size: 2.2rem; margin-bottom: 1rem; color: var(--primary); }
-    .section-subtitle { text-align: center; color: #64748b; margin-bottom: 3rem; }
-
-    /* SERVICES */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-      gap: 2rem;
-    }
-
-    .service-card {
-      background: var(--white);
-      padding: 2.5rem;
-      border-radius: 14px;
-      border: 1px solid #e5e7eb;
-      text-align: center;
-    }
-
-    /* ABOUT */
-    .about { background: #f1f5f9; }
-    .about-content { max-width: 800px; margin: auto; text-align: center; }
-
-    /* CONTACT */
-    .contact-form {
-      max-width: 600px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-
-    .contact-form input, .contact-form textarea {
-      padding: 1rem;
-      border-radius: 10px;
-      border: 1px solid #d1d5db;
-      font-family: inherit;
-    }
-
-    .success-message {
-      display: none;
-      color: var(--success);
-      text-align: center;
-      font-weight: 600;
-    }
-
-    .whatsapp-link {
-      text-align: center;
-      margin-top: 2rem;
-      display: block;
-      color: #16a34a;
-      font-weight: 600;
-    }
-
-    /* FOOTER */
-    footer {
-      background: var(--secondary);
-      color: #cbd5f5;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .menu-btn { display: block; }
-      .hero h1 { font-size: 2.1rem; }
-    }
-  </style>
+.puesto {
+    margin: 5px 0;
+}
+</style>
 </head>
+
 <body>
 
-<header>
-  <div class="nav">
-    <div class="logo">P&I S.A.</div>
-    <nav class="nav-links">
-      <a href="#inicio">Inicio</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#nosotros">Nosotros</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
-    <div class="menu-btn" onclick="openMenu()">☰</div>
-  </div>
-</header>
+<h1>FRIMSA S.A.</h1>
+<h2>🎉 Sorteo en Vivo 🎉</h2>
 
-<div class="mobile-menu" id="mobileMenu">
-  <div class="close-btn" onclick="closeMenu()">✕</div>
-  <a href="#inicio" onclick="closeMenu()">Inicio</a>
-  <a href="#servicios" onclick="closeMenu()">Servicios</a>
-  <a href="#nosotros" onclick="closeMenu()">Nosotros</a>
-  <a href="#contacto" onclick="closeMenu()">Contacto</a>
-</div>
+<p>Ingresá hasta <b>80 nombres</b> (uno por línea)</p>
+<textarea id="nombres"></textarea>
 
-<section id="inicio" class="hero">
-  <div>
-    <h1>Transformamos Estrategias en Resultados</h1>
-    <p>Consultoría profesional para empresas que buscan crecimiento sostenido.</p>
-    <a href="#contacto" class="btn-primary">Solicitar asesoramiento</a>
-  </div>
-</section>
+<p>Cantidad de ganadores (máx. 20)</p>
+<input type="number" id="cantidad" min="1" max="20" value="20">
 
-<section id="servicios">
-  <div class="container">
-    <h2>Servicios</h2>
-    <p class="section-subtitle">Soluciones diseñadas para organizaciones modernas.</p>
-    <div class="services-grid">
-      <div class="service-card"><h3>Consultoría Estratégica</h3><p>Análisis y optimización del negocio.</p></div>
-      <div class="service-card"><h3>Gestión de Proyectos</h3><p>Planificación y control eficiente.</p></div>
-      <div class="service-card"><h3>Asesoría Financiera</h3><p>Maximización del retorno de inversión.</p></div>
-    </div>
-  </div>
-</section>
+<br>
 
-<section id="nosotros" class="about">
-  <div class="container">
-    <h2>Sobre Nosotros</h2>
-    <p class="section-subtitle">Progreso e innovación empresarial.</p>
-    <div class="about-content">
-      <p>P&I S.A. acompaña a empresas en la toma de decisiones estratégicas con profesionalismo y visión de largo plazo.</p>
-    </div>
-  </div>
-</section>
+<button id="btnSortear" onclick="iniciarSorteo()">🎲 INICIAR SORTEO</button>
+<button id="btnResorteo" onclick="resetear()">🔁 RE-SORTEO</button>
 
-<section id="contacto">
-  <div class="container">
-    <h2>Contacto</h2>
-    <p class="section-subtitle">Dejanos tu mensaje y te responderemos.</p>
-    <form class="contact-form" onsubmit="sendMessage(event)">
-      <input type="text" placeholder="Nombre completo" required />
-      <input type="email" placeholder="Correo electrónico" required />
-      <textarea rows="5" placeholder="¿En qué podemos ayudarte?" required></textarea>
-      <button class="btn-primary">Enviar mensaje</button>
-      <div class="success-message" id="successMessage">Mensaje enviado correctamente</div>
-    </form>
-    <a class="whatsapp-link" href="https://wa.me/541123929030" target="_blank">WhatsApp: +54 11 2392-9030</a>
-    <p style="text-align:center; margin-top:1rem;">Email: <strong>ribarrarh@hotmail.com</strong></p>
-  </div>
-</section>
-
-<footer>
-  © 2025 P&I S.A. Consultores Asociados. Todos los derechos reservados.
-</footer>
+<div id="panelGanador"></div>
+<div class="listaGanadores" id="listaGanadores"></div>
 
 <script>
-  function openMenu() {
-    document.getElementById('mobileMenu').classList.add('active');
-  }
-  function closeMenu() {
-    document.getElementById('mobileMenu').classList.remove('active');
-  }
-  function sendMessage(e) {
-    e.preventDefault();
-    document.getElementById('successMessage').style.display = 'block';
-    e.target.reset();
-  }
+let participantes = [];
+let ganadores = [];
+let indice = 0;
+
+function iniciarSorteo() {
+    let texto = document.getElementById("nombres").value.trim();
+    let cantidad = parseInt(document.getElementById("cantidad").value);
+
+    if (!texto) {
+        alert("Ingresá los nombres.");
+        return;
+    }
+
+    participantes = texto.split("\n").map(n => n.trim()).filter(n => n);
+    
+    if (participantes.length > 80) {
+        alert("Máximo 80 nombres.");
+        return;
+    }
+
+    if (cantidad > participantes.length) {
+        alert("No hay suficientes participantes.");
+        return;
+    }
+
+    // Mezcla aleatoria
+    participantes.sort(() => Math.random() - 0.5);
+
+    ganadores = participantes.slice(0, cantidad);
+    indice = 0;
+
+    document.getElementById("listaGanadores").innerHTML = "";
+    mostrarSiguiente();
+}
+
+function mostrarSiguiente() {
+    if (indice >= ganadores.length) {
+        document.getElementById("panelGanador").innerHTML = "🎉 SORTEO FINALIZADO 🎉";
+        return;
+    }
+
+    document.getElementById("panelGanador").innerHTML = "🎰 Sorteando...";
+    
+    setTimeout(() => {
+        let nombre = ganadores[indice];
+        document.getElementById("panelGanador").innerHTML =
+            `🏆 Puesto ${indice + 1}: <br><b>${nombre}</b>`;
+
+        let div = document.createElement("div");
+        div.className = "puesto";
+        div.innerHTML = `Puesto ${indice + 1}: ${nombre}`;
+        document.getElementById("listaGanadores").appendChild(div);
+
+        indice++;
+        setTimeout(mostrarSiguiente, 2500);
+    }, 1500);
+}
+
+function resetear() {
+    document.getElementById("panelGanador").innerHTML = "";
+    document.getElementById("listaGanadores").innerHTML = "";
+    indice = 0;
+}
 </script>
 
 </body>
 </html>
+
+
